@@ -1,3 +1,15 @@
+#  +-------------------------------------------------------+
+#  | Copyright (c) 2022.                                   |
+#  +-------------------------------------------------------+
+#  | NAME  : PHO KHAING                                    |
+#  | EMAIL : khaing.pho1991@gmail.com                      |
+#  | DUTY  : FTB BANK (HEAD OFFICE)                        |
+#  | ROLE  : Full-Stack Software Developer                 |
+#  +-------------------------------------------------------+
+#  | Released 30.7.2022.                                   |
+#  +-------------------------------------------------------+
+
+
 from django.urls import path
 from . import views
 

@@ -1,0 +1,92 @@
+version: '3.8'
+services:
+  django:
+    build: .
+    image: django_api
+    container_name: django_api
+    ports:
+      - "8000:8000" # "local_port:default_image_port"
+    volumes:
+      - .:/django_api #current_dir:default_image_dir
+    # command: python3 manage.py runserver 0.0.0.0:8000
+    environment:
+      - POSTGRES_NAME=django_api
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    links:
+      - postgres
+    depends_on:
+      - postgres
+    networks:
+      django_api_network:
+        ipv4_address: 192.168.0.2
+
+  postgres:
+    container_name: django_postgres
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: django_api
+      PGDATA: /data/postgres
+    volumes:
+      - ./docker_data/postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    networks:
+      django_api_network:
+        ipv4_address: 192.168.0.3
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: django_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: khaing.pho1991@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: pgadmin
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+      - ./docker_data/pgadmin:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+    restart: unless-stopped
+    networks:
+      django_api_network:
+        ipv4_address: 192.168.0.4
+
+  # MySql
+  #    image: mysql:5.7
+  #    container_name: MySQL
+  #    restart: always
+  #    ports:
+  #      - "3306:3306"
+  #    environment:
+  #      MYSQL_DATABASE: django_db
+  #      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+  #      MYSQL_USER: admin
+  #      MYSQL_PASSWORD: admin
+  #      MYSQL_ROOT_PASSWORD: admin
+  #    volumes:
+  #      - ./docker_data/mysql_db:/var/lib/mysql
+
+  #  PhpMyAdmin:
+  #    image: phpmyadmin/phpmyadmin
+  #    container_name: Django_PhpMyAdmin
+  #    ports:
+  #      - "8880:80"
+  #    restart: always
+  #    environment:
+  #      PMA_HOST: MySQL
+  #      UPLOAD_LIMIT: 512M # 0.5 GB, default value is 2048K, this will change upload_max_filesize and post_max_size values https://github.com/phpmyadmin/docker)
+  #    depends_on:
+  #      - MySQL
+
+
+networks:
+  django_api_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.0.0/24 # from 192.168.0.(0-255)
+          gateway: 192.168.0.1
+

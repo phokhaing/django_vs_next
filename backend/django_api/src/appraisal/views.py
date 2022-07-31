@@ -1,11 +1,12 @@
-"""
-+=======================================================+
-|| NAME  : PHO KHAING                                  ||
-|| EMAIL : khaing.pho1991@gmail.com                    ||
-|| DUTY  : FTB BANK (HEAD OFFICE)                      ||
-|| ROLE  : Full-Stack Software Developer               ||
-+=======================================================+
-"""
+#  +-------------------------------------------------------+
+#  | NAME  : PHO KHAING                                    |
+#  | EMAIL : khaing.pho1991@gmail.com                      |
+#  | DUTY  : FTB BANK (HEAD OFFICE)                        |
+#  | ROLE  : Full-Stack Software Developer                 |
+#  +-------------------------------------------------------+
+#  | Copyright (c) 2022.                                   |
+#  | Released 30.7.2022.                                   |
+#  +-------------------------------------------------------+
 
 from django.shortcuts import get_object_or_404
 from rest_framework import status, serializers
